@@ -1,0 +1,22 @@
+.hud{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+.hud-score{
+    position: absolute;
+    font-size: 25px;
+    color: white;
+    top: 20px;
+    left: 20px;
+}
+.hud-pause-button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 40px;
+}

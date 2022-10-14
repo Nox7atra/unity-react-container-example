@@ -1,0 +1,6 @@
+.floating-text{
+    position: fixed;
+    color: white;
+    font-size: 24px;
+    z-index: 100;
+}
