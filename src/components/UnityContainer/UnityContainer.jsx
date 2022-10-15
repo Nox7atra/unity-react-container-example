@@ -3,11 +3,13 @@ import  {Unity,useUnityContext} from "react-unity-webgl";
 import {GameOver} from "../GameOver/GameOver";
 import {HUD} from "../HUD/HUD";
 import {PausePanel} from "../PausePanel/PausePanel";
+import {Onboarding} from "../Onboarding/Onboarding";
 
 export function UnityContainer(){
     const [isGameOver, setIsGameOver] = useState(false);
     const [score, setScore] = useState(0);
-    const [isPause, setPause] = useState(false);
+    const [isPause, setPause] = useState(true);
+    const [isShowOnboarding, setOnboarding] = useState(true);
     const { unityProvider, sendMessage, addEventListener, removeEventListener, isLoaded} =
         useUnityContext({
             loaderUrl: "./build/UnityBuild.loader.js",
@@ -57,16 +59,22 @@ export function UnityContainer(){
     }
     function handleRestartButton() {
         sendMessage("ReactEventsHandler", "Restart");
-        setPause(false);
         setIsGameOver(false);
         setScore(0);
-        sendMessage("ReactEventsHandler", "Resume");
-    }
+        setTimeout(()=>{
+            handleResumeButton();
+        }, 100)
 
+    }
+    function handleStartButton(){
+        handleResumeButton();
+        setOnboarding(false);
+    }
     return (<div>
         <Unity unityProvider={unityProvider} style={{width: "100vw", height: "100vh", overflow: "hidden", zIndex: 0}}/>
         <HUD score={score} pauseCallback={handlePauseButton}/>
         {isGameOver ? <GameOver score={score} restartCallback={handleRestartButton}/> : ""}
         {isPause ? <PausePanel resumeCallback={handleResumeButton}/> : ""}
+        {isShowOnboarding? <Onboarding isActive={!isLoaded} startCallback={handleStartButton}/> : ""}
     </div>);
 }

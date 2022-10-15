@@ -1,0 +1,17 @@
+.onboarding{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 15;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.onboarding-text{
+    padding-bottom: 40px;
+    font-size: 18px;
+}
