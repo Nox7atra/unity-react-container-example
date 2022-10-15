@@ -10,10 +10,8 @@
 @keyframes fly {
     0% {
         color: rgba(255,255,255,255);
-
         -webkit-animation-timing-function: ease-in;
     }
-
 
     100% {
         color: rgba(255,255,255,0);

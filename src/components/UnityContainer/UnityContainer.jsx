@@ -6,6 +6,8 @@ import {PausePanel} from "../PausePanel/PausePanel";
 import {Onboarding} from "../Onboarding/Onboarding";
 import {FloatingText} from "../FloatingText/FloatingText";
 
+let floatingTextTimer = 500;
+let timeoutID = undefined;
 export function UnityContainer(){
     const [isGameOver, setIsGameOver] = useState(false);
     const [score, setScore] = useState(0);
@@ -19,6 +21,7 @@ export function UnityContainer(){
             frameworkUrl: "./build/UnityBuild.framework.js.unityweb",
             codeUrl: "./build/UnityBuild.wasm.unityweb",
         });
+
     const handleGameOver = useCallback(()=>{
         setIsGameOver(true);
         setPause(true);
@@ -28,7 +31,9 @@ export function UnityContainer(){
     });
 
     const handleFloatingText = useCallback((x, y, text)=>{
-        if(floatingTexts.length > 3){
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(()=> updateFloatingTexts([]), floatingTextTimer);
+        if(floatingTexts.length > 10){
             updateFloatingTexts([]);
         }
         updateFloatingTexts(arr=>[...arr,<FloatingText x={x} y={y} text={text}/>]);
