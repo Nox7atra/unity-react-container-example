@@ -4,13 +4,15 @@ import {GameOver} from "../GameOver/GameOver";
 import {HUD} from "../HUD/HUD";
 import {PausePanel} from "../PausePanel/PausePanel";
 import {Onboarding} from "../Onboarding/Onboarding";
+import {FloatingText} from "../FloatingText/FloatingText";
 
 export function UnityContainer(){
     const [isGameOver, setIsGameOver] = useState(false);
     const [score, setScore] = useState(0);
     const [isPause, setPause] = useState(true);
     const [isShowOnboarding, setOnboarding] = useState(true);
-    const { unityProvider, sendMessage, addEventListener, removeEventListener, isLoaded} =
+    const [floatingTexts, updateFloatingTexts] = useState([]);
+    const {unityProvider, sendMessage, addEventListener, removeEventListener, isLoaded} =
         useUnityContext({
             loaderUrl: "./build/UnityBuild.loader.js",
             dataUrl: "./build/UnityBuild.data.unityweb",
@@ -26,7 +28,10 @@ export function UnityContainer(){
     });
 
     const handleFloatingText = useCallback((x, y, text)=>{
-
+        if(floatingTexts.length > 3){
+            updateFloatingTexts([]);
+        }
+        updateFloatingTexts(arr=>[...arr,<FloatingText x={x} y={y} text={text}/>]);
     });
 
     useEffect(() => {
@@ -76,5 +81,6 @@ export function UnityContainer(){
         {isGameOver ? <GameOver score={score} restartCallback={handleRestartButton}/> : ""}
         {isPause ? <PausePanel resumeCallback={handleResumeButton}/> : ""}
         {isShowOnboarding? <Onboarding isActive={!isLoaded} startCallback={handleStartButton}/> : ""}
+        {floatingTexts}
     </div>);
 }

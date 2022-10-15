@@ -1,6 +1,24 @@
 .floating-text{
     position: fixed;
     color: white;
-    font-size: 24px;
-    z-index: 100;
+    font-size: 32px;
+    z-index: 1;
+    -webkit-animation: fly 1s  normal ease-out forwards;
+    animation: fly 1s  normal ease-out forwards;
+}
+
+@keyframes fly {
+    0% {
+        color: rgba(255,255,255,255);
+
+        -webkit-animation-timing-function: ease-in;
+    }
+
+
+    100% {
+        color: rgba(255,255,255,0);
+        left: 20px;
+        top: 20px;
+        animation-timing-function: ease-out;
+    }
 }
